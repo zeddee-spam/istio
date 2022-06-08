@@ -292,6 +292,32 @@ def floodReviews(product_id, headers):
     loop.run_until_complete(floodReviewsAsynchronously(product_id, headers))
     loop.close()
 
+    
+    
+    
+
+@app.route('/zproductpage')
+@trace()
+def front():
+    product_id = 0  # TODO: replace default value
+    headers = getForwardHeaders(request)
+    user = session.get('user', '')
+    product = getProduct(product_id)
+    detailsStatus, details = getProductDetails(product_id, headers)
+
+    if flood_factor > 0:
+        floodReviews(product_id, headers)
+
+    reviewsStatus, reviews = getProductReviews(product_id, headers)
+    return render_template(
+        'productpage.html',
+        detailsStatus=detailsStatus,
+        reviewsStatus=reviewsStatus,
+        product=product,
+        details=details,
+        reviews=reviews,
+        user=user)
+
 
 @app.route('/productpage')
 @trace()
@@ -351,8 +377,8 @@ def getProducts():
     return [
         {
             'id': 0,
-            'title': 'The Comedy of Errors',
-            'descriptionHtml': '<a href="https://en.wikipedia.org/wiki/The_Comedy_of_Errors">Wikipedia Summary</a>: The Comedy of Errors is one of <b>William Shakespeare\'s</b> early plays. It is his shortest and one of his most farcical comedies, with a major part of the humour coming from slapstick and mistaken identity, in addition to puns and word play.'
+            'title': 'The Comedy of Errorz',
+            'descriptionHtml': '<a href="https://en.wikipedia.org/wiki/The_Comedy_of_Errorz">Wikipedia Summary</a>: The Comedy of Errors is one of <b>William Shakespeare\'s</b> early plays. It is his shortest and one of his most farcical comedies, with a major part of the humour coming from slapstick and mistaken identity, in addition to puns and word play.'
         }
     ]
 
