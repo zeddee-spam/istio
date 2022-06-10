@@ -52,7 +52,7 @@ spec:
     spec:
       containers:
       - name: details
-        image: quay.io/maistra/examples-bookinfo-details-v1:2.1.0
+        image: zeddeespam/examples-bookinfo-details-v1:1.1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
